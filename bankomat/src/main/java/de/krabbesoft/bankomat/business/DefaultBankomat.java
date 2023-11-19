@@ -1,5 +1,8 @@
 package de.krabbesoft.bankomat.business;
 
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Default;
+
 import de.krabbesoft.bankomat.model.Stueckelung;
 
 /**
@@ -9,6 +12,8 @@ import de.krabbesoft.bankomat.model.Stueckelung;
  * 
  * @author Christoph
  */
+@RequestScoped
+@Default
 public class DefaultBankomat implements Bankomat {
 
 	private final int[] betraege = { 20000, 10000, 5000, 2000, 1000, 500, 200, 100, 50, 20, 10, 5, 2, 1 };
