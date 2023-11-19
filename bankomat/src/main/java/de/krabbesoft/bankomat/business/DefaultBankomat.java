@@ -11,24 +11,24 @@ import de.krabbesoft.bankomat.model.Stueckelung;
  */
 public class DefaultBankomat implements Bankomat {
 
-	private final double[] betraege = { 200, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01 };
-	private final int[] betragAnzahlen = new int[betraege.length];
-
+	private final int[] betraege = { 20000, 10000, 5000, 2000, 1000, 500, 200, 100, 50, 20, 10, 5, 2, 1 };
+	
 	@Override
-	public Stueckelung berechneStueckelung(double wert) throws IllegalArgumentException {
-		if (wert < 0) {
+	public Stueckelung berechneStueckelung(int euro, int cents) throws IllegalArgumentException {
+		if (euro < 0 || cents < 0) {
 			throw new IllegalArgumentException("values less than 0 are not allowed");
 		}
 		
 		int betragIndex = 0;
-		double restWert = wert;
+		int restWert = euro * 100 + cents; // entire calculation will be based on cents
+		int[] betragAnzahlen = new int[betraege.length];
 
 		while (betragIndex < betraege.length) {
-			double aktuellerBetrag = betraege[betragIndex];
+			int aktuellerBetrag = betraege[betragIndex];
 			int passtNMal = (int) (restWert / aktuellerBetrag);
 			if (passtNMal > 0) {
 				betragAnzahlen[betragIndex] = passtNMal;
-				restWert = restWert - (aktuellerBetrag * passtNMal);
+				restWert = restWert % aktuellerBetrag;
 			}
 			
 			betragIndex++;

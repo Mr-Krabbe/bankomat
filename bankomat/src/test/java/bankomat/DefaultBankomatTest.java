@@ -12,7 +12,7 @@ public class DefaultBankomatTest {
 	
 	@Test
 	public void test_000() {
-		Stueckelung stueckelung = bankomat.berechneStueckelung(234.23);
+		Stueckelung stueckelung = bankomat.berechneStueckelung(234, 23);
 		Assertions.assertEquals(1, stueckelung.num200EuroSchein());
 		Assertions.assertEquals(0, stueckelung.num100EuroSchein());
 		Assertions.assertEquals(0, stueckelung.num50EuroSchein());
@@ -30,7 +30,7 @@ public class DefaultBankomatTest {
 	
 	@Test
 	public void test_001() {
-		Stueckelung stueckelung = bankomat.berechneStueckelung(451.86);
+		Stueckelung stueckelung = bankomat.berechneStueckelung(451, 86);
 		Assertions.assertEquals(2, stueckelung.num200EuroSchein());
 		Assertions.assertEquals(0, stueckelung.num100EuroSchein());
 		Assertions.assertEquals(1, stueckelung.num50EuroSchein());
@@ -48,7 +48,7 @@ public class DefaultBankomatTest {
 	
 	@Test
 	public void test_002() {
-		Stueckelung stueckelung = bankomat.berechneStueckelung(0.01);
+		Stueckelung stueckelung = bankomat.berechneStueckelung(0, 01);
 		Assertions.assertEquals(0, stueckelung.num200EuroSchein());
 		Assertions.assertEquals(0, stueckelung.num100EuroSchein());
 		Assertions.assertEquals(0, stueckelung.num50EuroSchein());
@@ -66,7 +66,7 @@ public class DefaultBankomatTest {
 	
 	@Test
 	void test_003() {
-		Stueckelung stueckelung = bankomat.berechneStueckelung(0);
+		Stueckelung stueckelung = bankomat.berechneStueckelung(0, 0);
 		Assertions.assertEquals(0, stueckelung.num200EuroSchein());
 		Assertions.assertEquals(0, stueckelung.num100EuroSchein());
 		Assertions.assertEquals(0, stueckelung.num50EuroSchein());
@@ -86,13 +86,13 @@ public class DefaultBankomatTest {
 	void test_004() {
 		Assertions.assertThrows(
 				IllegalArgumentException.class, 
-				() -> bankomat.berechneStueckelung(-500), 
+				() -> bankomat.berechneStueckelung(-500, 0), 
 				"expected IllegalArgumentException to be thrown for negative values");
 	}
 	
 	@Test
 	void test_005() {
-		Stueckelung stueckelung = bankomat.berechneStueckelung(200780.13);
+		Stueckelung stueckelung = bankomat.berechneStueckelung(200780, 13);
 		Assertions.assertEquals(1003, stueckelung.num200EuroSchein());
 		Assertions.assertEquals(1, stueckelung.num100EuroSchein());
 		Assertions.assertEquals(1, stueckelung.num50EuroSchein());
