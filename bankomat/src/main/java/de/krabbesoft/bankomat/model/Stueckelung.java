@@ -1,6 +1,7 @@
 package de.krabbesoft.bankomat.model;
 
-public record Stueckelung(int num200EuroSchein, int num100EuroSchein, int num50EuroSchein, int num20EuroSchein,
+public record Stueckelung(
+		int num200EuroSchein, int num100EuroSchein, int num50EuroSchein, int num20EuroSchein,
 		int num10EuroSchein, int num5EuroSchein, int num2EuroMuenze, int num1EuroMuenze, int num50CentMuenze,
 		int num20CentMuenze, int num10CentMuenze, int num5CentMuenze, int num2CentMuenze, int num1CentMuenze) {
 
