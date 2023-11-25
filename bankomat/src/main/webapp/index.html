@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Bankomat</title>
+</head>
+
+<body>
+
+	<h1>Bankomat</h1>
+
+	<h2>Betrag eingeben</h1>
+		<input id="betrag" type="text" value="0,00">
+		<button onclick="stueckeln()">Stückelung berechnen</button>
+
+		<h2 style="margin-top: 100px;">Stückelung</h2>
+		<table border="1" id="resultTable">
+			<thead>
+				<tr>
+					<th>Schein / Münze</th>
+					<th>Anzahl</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr id="row200Euro">
+					<td><span>200,00</span></td>
+					<td><span id="num200Euro" /></td>
+				</tr>
+				<tr id="row100Euro">
+					<td><span>100,00</span></td>
+					<td><span id="num100Euro" /></td>
+				</tr>
+				<tr id="row50Euro">
+					<td><span>50,00</span></td>
+					<td><span id="num50Euro" /></td>
+				</tr>
+				<tr id="row20Euro">
+					<td><span>20,00</span></td>
+					<td><span id="num20Euro" /></td>
+				</tr>
+				<tr id="row10Euro">
+					<td><span>10,00</span></td>
+					<td><span id="num10Euro" /></td>
+				</tr>
+				<tr id="row5Euro">
+					<td><span>5,00</span></td>
+					<td><span id="num5Euro" /></td>
+				</tr>
+				<tr id="row2Euro">
+					<td><span>2,00</span></td>
+					<td><span id="num2Euro" /></td>
+				</tr>
+				<tr id="row1Euro">
+					<td><span>1,00</span></td>
+					<td><span id="num1Euro" /></td>
+				</tr>
+				<tr id="row50Cent">
+					<td><span>0,50</span></td>
+					<td><span id="num50Cent" /></td>
+				</tr>
+				<tr id="row20Cent">
+					<td><span>0,20</span></td>
+					<td><span id="num20Cent" /></td>
+				</tr>
+				<tr id="row10Cent">
+					<td><span>0,10</span></td>
+					<td><span id="num10Cent" /></td>
+				</tr>
+				<tr id="row5Cent">
+					<td><span>0,05</span></td>
+					<td><span id="num5Cent" /></td>
+				</tr>
+				<tr id="row2Cent">
+					<td><span>0,02</span></td>
+					<td><span id="num2Cent" /></td>
+				</tr>
+				<tr id="row1Cent">
+					<td><span>0,01</span></td>
+					<td><span id="num1Cent" /></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<span id="errorMessage" />
+
+		<script>
+			function stueckeln() {
+				var value = document.getElementById("betrag").value;
+				var url = "http://localhost:8080/bankomat/restapi/stueckelung?value=" + encodeURIComponent(value);
+				fetch(url)
+					.then(response => {
+						return response.json();
+					})
+					.then(json => {
+						showResult(json);
+					})
+					.catch(error => {
+						showErrorMessage(error.message)
+					});
+			}
+
+			function showResult(jsonResponse) {
+				const errorMessage = jsonResponse["message"];
+				if (errorMessage != null) {
+					showErrorMessage(errorMessage);
+				} else {
+					document.getElementById("resultTable").hidden = false;
+					document.getElementById("errorMessage").hidden = true;
+
+					var num = jsonResponse["num200EuroSchein"];
+					var element = document.getElementById("num200Euro")
+					var row = document.getElementById("row200Euro")
+					showValue(num, element, row);
+
+					num = jsonResponse["num100EuroSchein"]
+					element = document.getElementById("num100Euro")
+					row = document.getElementById("row100Euro")
+					showValue(num, element, row);
+
+					num = jsonResponse["num50EuroSchein"]
+					element = document.getElementById("num50Euro")
+					row = document.getElementById("row50Euro")
+					showValue(num, element, row);
+
+					num = jsonResponse["num20EuroSchein"]
+					element = document.getElementById("num20Euro")
+					row = document.getElementById("row20Euro")
+					showValue(num, element, row);
+
+					num = jsonResponse["num10EuroSchein"]
+					element = document.getElementById("num10Euro")
+					row = document.getElementById("row10Euro")
+					showValue(num, element, row);
+
+					num = jsonResponse["num5EuroSchein"]
+					element = document.getElementById("num5Euro")
+					row = document.getElementById("row5Euro")
+					showValue(num, element, row);
+
+					num = jsonResponse["num2EuroMuenze"]
+					element = document.getElementById("num2Euro")
+					row = document.getElementById("row2Euro")
+					showValue(num, element, row);
+
+					num = jsonResponse["num1EuroMuenze"]
+					element = document.getElementById("num1Euro")
+					row = document.getElementById("row1Euro")
+					showValue(num, element, row);
+
+					num = jsonResponse["num50CentMuenze"]
+					element = document.getElementById("num50Cent")
+					row = document.getElementById("row50Cent")
+					showValue(num, element, row);
+
+					num = jsonResponse["num20CentMuenze"]
+					element = document.getElementById("num20Cent")
+					row = document.getElementById("row20Cent")
+					showValue(num, element, row);
+
+					num = jsonResponse["num10CentMuenze"]
+					element = document.getElementById("num10Cent")
+					row = document.getElementById("row10Cent")
+					showValue(num, element, row);
+
+					num = jsonResponse["num5CentMuenze"]
+					element = document.getElementById("num5Cent")
+					row = document.getElementById("row5Cent")
+					showValue(num, element, row);
+
+					num = jsonResponse["num2CentMuenze"]
+					element = document.getElementById("num2Cent")
+					row = document.getElementById("row2Cent")
+					showValue(num, element, row);
+
+					num = jsonResponse["num1CentMuenze"]
+					element = document.getElementById("num1Cent")
+					row = document.getElementById("row1Cent")
+					showValue(num, element, row);
+				}
+			}
+
+			function showValue(value, element, row) {
+				if (value != null && value != 0) {
+					row.hidden = false
+					element.innerText = value
+				} else {
+					row.hidden = true
+				}
+			}
+
+			function showErrorMessage(errorMessage) {
+				document.getElementById("resultTable").hidden = true;
+				var errorField = document.getElementById("errorMessage");
+				errorField.hidden = false;
+				errorField.innerText = errorMessage
+			}
+
+		</script>
+
+</body>
+
+</html>
