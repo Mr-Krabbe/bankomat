@@ -107,5 +107,13 @@ public class DefaultBankomatTest {
 		Assertions.assertEquals(1, stueckelung.num2CentMuenze());
 		Assertions.assertEquals(1, stueckelung.num1CentMuenze());
 	}
+	
+	@Test
+	void test_006() {
+		Stueckelung stueckelung = bankomat.berechneStueckelung(150, 23);
+		Assertions.assertEquals(1, stueckelung.num20CentMuenze());
+		Assertions.assertEquals(1, stueckelung.num2CentMuenze());
+		Assertions.assertEquals(1, stueckelung.num1CentMuenze());
+	}
 
 }

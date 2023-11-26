@@ -1,22 +1,21 @@
 package de.krabbesoft.bankomat.business;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
+import java.math.BigDecimal;
+import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 public class InputParser {
 
 	public static record ParseResult(int euro, int cent) {}
 
-	public static ParseResult parse(Locale locale, String value) throws ParseException {
-		NumberFormat format = DecimalFormat.getInstance(locale);
-		Number number = format.parse(value);
-		double doubleValue = number.doubleValue();
+	public static ParseResult parse(Locale locale, String value) throws NumberFormatException {
+		char decimalSeparator = DecimalFormatSymbols.getInstance(locale).getDecimalSeparator();
+		
+		value = value.replace(decimalSeparator, '.');
+		BigDecimal gesamt = new BigDecimal(value);
 
-		int euro = (int) doubleValue;
-		int multiplied = (int) (doubleValue * 100);
-		int cent = multiplied - euro * 100;
+		int euro = gesamt.intValue();
+		int cent = gesamt.remainder(BigDecimal.ONE).multiply(BigDecimal.valueOf(100)).intValue();
 
 		return new ParseResult(euro, cent);
 	}

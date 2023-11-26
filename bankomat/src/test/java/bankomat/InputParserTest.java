@@ -77,15 +77,15 @@ public class InputParserTest {
 	}
 	
 	@Test
-	public void localeTest_004() throws ParseException {
-		ParseResult parseResult = InputParser.parse(Locale.GERMANY, "234.23");
+	public void standardTest_008() throws ParseException {
+		ParseResult parseResult = InputParser.parse(Locale.GERMANY, "150,23");
 		
-		Assertions.assertEquals(23423, parseResult.euro());
-		Assertions.assertEquals(0, parseResult.cent());
+		Assertions.assertEquals(150, parseResult.euro());
+		Assertions.assertEquals(23, parseResult.cent());
 	}
-	
+		
 	@Test
-	public void localeTest_005() throws ParseException {
+	public void localeTest_000() throws ParseException {
 		ParseResult parseResult = InputParser.parse(Locale.UK, "234.23");
 		
 		Assertions.assertEquals(234, parseResult.euro());
@@ -94,20 +94,12 @@ public class InputParserTest {
 	
 	@Test
 	public void invalidInputTest_000() throws ParseException {
-		Assertions.assertThrows(ParseException.class, () -> {
+		Assertions.assertThrows(NumberFormatException.class, () -> {
 			ParseResult parseResult = InputParser.parse(Locale.GERMANY, "Das ist keine Zahl");
 			
 			Assertions.assertEquals(234, parseResult.euro());
 			Assertions.assertEquals(23, parseResult.cent());		
 		});
-	}
-	
-	@Test
-	public void mixedInputTest_000() throws ParseException {
-		ParseResult parseResult = InputParser.parse(Locale.GERMANY, "12,23 Das hier können wir parsen");
-		
-		Assertions.assertEquals(12, parseResult.euro());
-		Assertions.assertEquals(23, parseResult.cent());
 	}
 	
 	@Test
