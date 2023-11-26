@@ -1,9 +1,8 @@
 package de.krabbesoft.bankomat.business;
 
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Default;
-
 import de.krabbesoft.bankomat.model.Stueckelung;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.inject.Default;
 
 /**
  * Der <code>DefaultBankomat</code> berechnet die Stückelung für einen Wert in der Weise, dass

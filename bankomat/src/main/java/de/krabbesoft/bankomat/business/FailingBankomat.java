@@ -1,9 +1,8 @@
 package de.krabbesoft.bankomat.business;
 
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Alternative;
-
 import de.krabbesoft.bankomat.model.Stueckelung;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.inject.Alternative;
 
 /**
  * A <code>Bankomat</code> implementation for demonstration purposes, that will
